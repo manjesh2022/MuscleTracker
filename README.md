@@ -1,4 +1,4 @@
-# 🏋️‍♂️ Gym Tracker
+# 🏋️‍♂️ Muscle Tracker
 
 A personal fitness and workout tracking web utility built using HTML, CSS, and JavaScript to log daily exercises, track sets/reps, and monitor strength progress over time.
 
