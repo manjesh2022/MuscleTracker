@@ -17,7 +17,7 @@ A personal fitness and workout tracking web utility built using HTML, CSS, and J
 
 ## 🌐 Live Demo
 
-https://manjesh2022.github.io/GymTracker/
+https://manjesh2022.github.io/MuscleTracker/
 
 ## 📄 License
 
