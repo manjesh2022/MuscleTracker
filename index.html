@@ -54,6 +54,43 @@
       --radius-md: 8px;
       --radius-sm: 6px;
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      
+      --input-bg: rgba(9, 9, 11, 0.6);
+      --header-bg: rgba(9, 9, 11, 0.8);
+      --sidebar-bg: rgba(18, 18, 20, 0.95);
+      --bg-gradient-1: rgba(34, 197, 94, 0.05);
+      --bg-gradient-2: rgba(56, 189, 248, 0.04);
+    }
+
+    body.light-theme {
+      --bg-dark: #f4f4f5;
+      --bg-card: rgba(255, 255, 255, 0.85);
+      --bg-card-border: rgba(0, 0, 0, 0.08);
+      --bg-hover: rgba(228, 228, 231, 0.8);
+      --accent: #16a34a;
+      --accent-glow: rgba(22, 163, 74, 0.25);
+      --accent-dark: #15803d;
+      
+      --ab-accent: #0284c7;
+      --ab-glow: rgba(2, 132, 199, 0.25);
+      
+      --text-main: #18181b;
+      --text-muted: #52525b;
+      --text-dim: #71717a;
+
+      --cal-past-bg: rgba(245, 158, 11, 0.12);
+      --cal-past-border: rgba(245, 158, 11, 0.35);
+      --cal-past-text: #b45309;
+      
+      --cal-today-bg: rgba(34, 197, 94, 0.15);
+      --cal-today-border: #16a34a;
+      --cal-today-glow: rgba(22, 163, 74, 0.3);
+
+      --input-bg: rgba(255, 255, 255, 0.9);
+      --header-bg: rgba(244, 244, 245, 0.85);
+      --sidebar-bg: rgba(255, 255, 255, 0.95);
+      --bg-gradient-1: rgba(34, 197, 94, 0.08);
+      --bg-gradient-2: rgba(56, 189, 248, 0.06);
     }
 
     * {
@@ -70,8 +107,9 @@
       display: flex;
       overflow-x: hidden;
       background-image: 
-        radial-gradient(circle at 10% 20%, rgba(34, 197, 94, 0.05) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.04) 0%, transparent 40%);
+        radial-gradient(circle at 10% 20%, var(--bg-gradient-1) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, var(--bg-gradient-2) 0%, transparent 40%);
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -86,14 +124,14 @@
       border: 1px solid var(--bg-card-border);
       border-radius: var(--radius-lg);
       padding: 14px 16px;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
       transition: var(--transition);
       margin-bottom: 14px;
     }
 
     #sidebar {
       width: var(--sidebar-width);
-      background: rgba(18, 18, 20, 0.95);
+      background: var(--sidebar-bg);
       backdrop-filter: var(--glass-blur);
       border-right: 1px solid var(--bg-card-border);
       display: flex;
@@ -129,7 +167,7 @@
     .sidebar-header h1 {
       font-size: 1.1rem;
       font-weight: 700;
-      background: linear-gradient(135deg, #fff 0%, var(--text-muted) 100%);
+      background: linear-gradient(135deg, var(--text-main) 0%, var(--text-muted) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -174,7 +212,7 @@
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid var(--bg-card-border);
-      background: rgba(9, 9, 11, 0.8);
+      background: var(--header-bg);
       backdrop-filter: var(--glass-blur);
       position: sticky;
       top: 0;
@@ -183,6 +221,12 @@
 
     .header-user h2 { font-size: 1.2rem; font-weight: 700; }
     .header-user p { font-size: 0.75rem; color: var(--text-muted); }
+
+    .header-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
     .info-badge {
       background: var(--bg-card);
@@ -195,6 +239,24 @@
       gap: 8px;
     }
     .info-badge i { color: var(--accent); }
+
+    .theme-toggle-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      color: var(--text-main);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .theme-toggle-btn:hover {
+      background: var(--bg-hover);
+      color: var(--accent);
+    }
 
     .mobile-toggle { display: none; background: none; border: none; color: var(--text-main); font-size: 1.3rem; cursor: pointer; }
 
@@ -225,12 +287,12 @@
       transition: var(--transition);
       font-size: 0.75rem;
     }
-    .btn-primary { background: var(--accent); color: #000; }
+    .btn-primary { background: var(--accent); color: #fff; }
     .btn-primary:hover { background: var(--accent-dark); box-shadow: 0 0 12px var(--accent-glow); }
-    .btn-ab { background: var(--ab-accent); color: #000; }
+    .btn-ab { background: var(--ab-accent); color: #fff; }
     .btn-ab:hover { background: #0ea5e9; box-shadow: 0 0 12px var(--ab-glow); }
     .btn-secondary { background: var(--bg-hover); color: var(--text-main); border: 1px solid var(--bg-card-border); }
-    .btn-secondary:hover { background: #3f3f46; }
+    .btn-secondary:hover { opacity: 0.9; }
     .btn-danger { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
     .btn-danger:hover { background: #ef4444; color: #fff; }
 
@@ -239,7 +301,7 @@
     .input-control, select, textarea {
       width: 100%;
       padding: 5px 8px;
-      background: rgba(9, 9, 11, 0.6);
+      background: var(--input-bg);
       border: 1px solid var(--bg-card-border);
       border-radius: var(--radius-md);
       color: var(--text-main);
@@ -249,9 +311,8 @@
     }
     .input-control:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 6px var(--accent-glow); }
 
-    /* Freeze inputs/cards styling to prevent layout shift/motion when toggling edit/save */
     input:disabled, select:disabled, textarea:disabled {
-      background: rgba(9, 9, 11, 0.6) !important;
+      background: var(--input-bg) !important;
       color: var(--text-main) !important;
       opacity: 1 !important;
       border-color: var(--bg-card-border) !important;
@@ -277,7 +338,7 @@
     .metric-data p { font-size: 0.7rem; color: var(--text-muted); }
 
     .split-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px; margin-top: 8px; }
-    .split-day-item { background: rgba(9, 9, 11, 0.5); border: 1px solid var(--bg-card-border); border-radius: var(--radius-md); padding: 6px; text-align: center; }
+    .split-day-item { background: var(--input-bg); border: 1px solid var(--bg-card-border); border-radius: var(--radius-md); padding: 6px; text-align: center; }
     .split-day-item.today { border-color: var(--accent); background: rgba(34, 197, 94, 0.08); }
     .split-day-item h4 { font-size: 0.7rem; color: var(--text-muted); }
     .split-day-item p { font-size: 0.7rem; font-weight: 600; margin-top: 2px; color: var(--text-main); }
@@ -288,11 +349,10 @@
     .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
     .calendar-day-head { text-align: center; font-weight: 600; font-size: 0.65rem; color: var(--text-muted); padding: 2px; }
     
-    /* FIX: Fixed cell height and box-sizing to eliminate calendar size shifts */
     .calendar-day {
       height: 60px;
       box-sizing: border-box;
-      background: rgba(18, 18, 20, 0.6);
+      background: var(--input-bg);
       border: 1px solid var(--bg-card-border);
       border-radius: var(--radius-sm);
       padding: 4px;
@@ -301,12 +361,12 @@
       overflow: hidden;
       transition: var(--transition);
     }
-    .calendar-day:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); }
+    .calendar-day:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); }
     .calendar-day.empty { background: transparent; border: none; cursor: default; }
     .calendar-day.past-date { background: var(--cal-past-bg); border: 1px solid var(--cal-past-border); }
     .calendar-day.past-date .day-num { color: var(--cal-past-text); }
     .calendar-day.today-highlight { background: var(--cal-today-bg); border: 1.5px solid var(--cal-today-border); box-shadow: 0 0 8px var(--cal-today-glow); }
-    .calendar-day.today-highlight .day-num { color: #22c55e; font-weight: 800; }
+    .calendar-day.today-highlight .day-num { color: var(--accent); font-weight: 800; }
     .day-num { font-weight: 600; font-size: 0.7rem; line-height: 1; }
     .status-indicator {
       align-self: flex-start;
@@ -324,13 +384,33 @@
     .exercise-table-container { overflow-x: auto; margin-top: 10px; }
     .exercise-table { width: 100%; border-collapse: collapse; text-align: left; }
     .exercise-table th, .exercise-table td { padding: 8px 10px; border-bottom: 1px solid var(--bg-card-border); font-size: 0.75rem; white-space: nowrap; }
-    .exercise-table th { color: var(--text-muted); font-weight: 600; background: rgba(9, 9, 11, 0.4); }
+    .exercise-table th { color: var(--text-muted); font-weight: 600; background: var(--input-bg); }
+
+    /* Log Status Badges */
+    .badge-status {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.68rem;
+      letter-spacing: 0.5px;
+    }
+    .badge-status-missed {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    .badge-status-rest {
+      background: rgba(107, 114, 128, 0.15);
+      color: var(--status-rest);
+      border: 1px solid rgba(107, 114, 128, 0.3);
+    }
 
     /* Modal Dialogs */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(0, 0, 0, 0.75);
       backdrop-filter: var(--glass-blur);
       z-index: 1000;
       display: none;
@@ -351,7 +431,7 @@
       margin-bottom: 6px;
     }
     .exercise-block {
-      background: rgba(9, 9, 11, 0.6);
+      background: var(--input-bg);
       border: 1px solid var(--bg-card-border);
       border-radius: var(--radius-md);
       padding: 6px 8px;
@@ -372,10 +452,10 @@
       grid-template-columns: 32px 1fr 22px;
       gap: 4px;
       align-items: center;
-      background: rgba(24, 24, 27, 0.5);
+      background: var(--bg-card);
       padding: 2px 4px;
       border-radius: var(--radius-sm);
-      border: 1px solid rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--bg-card-border);
     }
     .set-row.weighted-set {
       grid-template-columns: 32px 1fr 1fr 22px;
@@ -450,6 +530,9 @@
           <i class="fa-solid fa-fire"></i>
           <span>Today's Split: <strong id="header-split">Chest + Tricep</strong></span>
         </div>
+        <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Light/Dark Mode">
+          <i class="fa-solid fa-moon"></i>
+        </button>
       </div>
     </header>
 
@@ -481,31 +564,31 @@
         <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">Complete your warmup routine before training sessions.</p>
         
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 6px; font-size: 0.72rem;">
-          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; background: rgba(9,9,11,0.4); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--bg-card-border);">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; background: var(--input-bg); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--bg-card-border);">
             <input type="checkbox" style="accent-color: var(--accent);"> Head turn (5x)
           </label>
-          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; background: rgba(9,9,11,0.4); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--bg-card-border);">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; background: var(--input-bg); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--bg-card-border);">
             <input type="checkbox" style="accent-color: var(--accent);"> Wrist turn (5x)
           </label>
-          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; background: rgba(9,9,11,0.4); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--bg-card-border);">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; background: var(--input-bg); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--bg-card-border);">
             <input type="checkbox" style="accent-color: var(--accent);"> Waist turn (5x)
           </label>
-          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; background: rgba(9,9,11,0.4); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--bg-card-border);">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; background: var(--input-bg); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--bg-card-border);">
             <input type="checkbox" style="accent-color: var(--accent);"> Elbow turn (10x)
           </label>
-          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; background: rgba(9,9,11,0.4); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--bg-card-border);">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; background: var(--input-bg); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--bg-card-border);">
             <input type="checkbox" style="accent-color: var(--accent);"> Front arm swing (10x)
           </label>
-          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; background: rgba(9,9,11,0.4); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--bg-card-border);">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; background: var(--input-bg); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--bg-card-border);">
             <input type="checkbox" style="accent-color: var(--accent);"> Cross arm swing (10x)
           </label>
-          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; background: rgba(9,9,11,0.4); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--bg-card-border);">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; background: var(--input-bg); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--bg-card-border);">
             <input type="checkbox" style="accent-color: var(--accent);"> Cross body toe (10x)
           </label>
-          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; background: rgba(9,9,11,0.4); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--bg-card-border);">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; background: var(--input-bg); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--bg-card-border);">
             <input type="checkbox" style="accent-color: var(--accent);"> Arm Circles (10x)
           </label>
-          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; background: rgba(9,9,11,0.4); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--bg-card-border);">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; background: var(--input-bg); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--bg-card-border);">
             <input type="checkbox" style="accent-color: var(--accent);"> Cat-Cow Stretch (10x)
           </label>
         </div>
@@ -811,6 +894,7 @@
     let chartAbInstance = null;
 
     document.addEventListener("DOMContentLoaded", () => {
+      initTheme();
       loadLocalStorage();
       setupHeaderInfo();
       
@@ -828,6 +912,42 @@
       renderMeasurementTable();
       initCharts();
     });
+
+    function initTheme() {
+      const savedTheme = localStorage.getItem("muscle_tracker_theme") || "dark";
+      if (savedTheme === "light") {
+        document.body.classList.add("light-theme");
+        document.getElementById("theme-toggle-btn").innerHTML = '<i class="fa-solid fa-sun"></i>';
+      }
+    }
+
+    function toggleTheme() {
+      const isLight = document.body.classList.toggle("light-theme");
+      const btn = document.getElementById("theme-toggle-btn");
+      if (isLight) {
+        btn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+        localStorage.setItem("muscle_tracker_theme", "light");
+      } else {
+        btn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        localStorage.setItem("muscle_tracker_theme", "dark");
+      }
+      updateChartColors();
+    }
+
+    function updateChartColors() {
+      if (!chartWeightInstance || !chartAbInstance) return;
+      const isLight = document.body.classList.contains("light-theme");
+      const gridColor = isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.05)';
+      const textColor = isLight ? '#18181b' : '#f4f4f5';
+
+      [chartWeightInstance, chartAbInstance].forEach(chart => {
+        chart.options.scales.x.ticks.color = textColor;
+        chart.options.scales.y.ticks.color = textColor;
+        chart.options.scales.x.grid.color = gridColor;
+        chart.options.scales.y.grid.color = gridColor;
+        chart.update();
+      });
+    }
 
     function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
 
@@ -1167,7 +1287,7 @@
 
         let weightDisplay = measurement && measurement.weight ? `${measurement.weight.toFixed(1)} kg` : '--';
         
-        if (workout && workout.exercises && workout.exercises.length > 0) {
+        if (workout && workout.status === 'Completed' && workout.exercises && workout.exercises.length > 0) {
           const totalExercises = workout.exercises.length;
           
           let exerciseHtml = workout.exercises.map((ex, idx) => {
@@ -1184,7 +1304,7 @@
             }
           }).join('');
 
-          let muscleGroupText = workout.split || (workout.status === 'Completed' ? 'General' : workout.status);
+          let muscleGroupText = workout.split || 'General';
 
           rowsHtml += `
             <tr style="cursor: pointer;" onclick="openWorkoutModal('${dateStr}')" title="Click to edit/log">
@@ -1196,8 +1316,21 @@
               <td><span style="font-weight: 600; color: var(--ab-accent);">${muscleGroupText}</span></td>
             </tr>
           `;
+        } else if (workout && (workout.status === 'Missed' || workout.status === 'Rest')) {
+          let badgeClass = workout.status === 'Missed' ? 'badge-status-missed' : 'badge-status-rest';
+          let badgeLabel = workout.status === 'Missed' ? 'MISSED' : 'REST';
+          
+          rowsHtml += `
+            <tr style="cursor: pointer;" onclick="openWorkoutModal('${dateStr}')" title="Click to edit/log">
+              <td><strong>#${day}</strong></td>
+              <td>${dayName}</td>
+              <td><span style="font-weight: 600;">${dateStr}</span></td>
+              <td style="color: var(--text-muted);"><em>${workout.status === 'Missed' ? 'Workout Missed' : 'Rest Day'}</em></td>
+              <td>${weightDisplay}</td>
+              <td><span class="badge-status ${badgeClass}">${badgeLabel}</span></td>
+            </tr>
+          `;
         } else {
-          let statusText = workout ? workout.status : 'No Log';
           rowsHtml += `
             <tr style="cursor: pointer; opacity: 0.7;" onclick="openWorkoutModal('${dateStr}')" title="Click to edit/log">
               <td><strong>#${day}</strong></td>
@@ -1205,7 +1338,7 @@
               <td><span style="font-weight: 600;">${dateStr}</span></td>
               <td style="color: var(--text-muted);"><em>No exercises logged</em></td>
               <td>${weightDisplay}</td>
-              <td><span style="color: var(--text-muted);">${statusText}</span></td>
+              <td><span style="color: var(--text-muted);">No Log</span></td>
             </tr>
           `;
         }
@@ -1286,7 +1419,7 @@
 
           exercisesInGroup.forEach(pr => {
             htmlContent += `
-              <div style="background: rgba(9,9,11,0.4); border: 1px solid var(--bg-card-border); padding: 6px 8px; border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: center;">
+              <div style="background: var(--input-bg); border: 1px solid var(--bg-card-border); padding: 6px 8px; border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: center;">
                 <div>
                   <div style="font-weight: 600; font-size: 0.78rem; color: var(--text-main);">${pr.exerciseName}</div>
                   <div style="font-size: 0.65rem; color: var(--text-muted);">${pr.subText}</div>
@@ -1460,7 +1593,7 @@
             "Day": dayName,
             "Body Weight (kg)": weightVal,
             "Muscle Group": muscleGroup,
-            "Exercises Logged": "No exercises logged",
+            "Exercises Logged": workout && workout.status === 'Missed' ? "Workout Missed" : (workout && workout.status === 'Rest' ? "Rest Day" : "No exercises logged"),
             "Notes": workout ? workout.notes || "" : ""
           });
         }
@@ -1509,7 +1642,6 @@
       `).join('');
     }
 
-    /* FIX: Standardized element height rendering to preserve calendar structure */
     function renderCalendar() {
       const year = parseInt(document.getElementById('cal-year-select').value);
       const month = parseInt(document.getElementById('cal-month-select').value);
@@ -1550,18 +1682,36 @@
     }
 
     function initCharts() {
+      const isLight = document.body.classList.contains("light-theme");
+      const gridColor = isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.05)';
+      const textColor = isLight ? '#18181b' : '#f4f4f5';
+
       const ctx1 = document.getElementById('chart-weight').getContext('2d');
       chartWeightInstance = new Chart(ctx1, {
         type: 'line',
         data: { labels: [], datasets: [{ label: 'Weight (kg)', data: [], borderColor: '#22c55e', backgroundColor: 'rgba(34, 197, 94, 0.1)', tension: 0.3, fill: true }] },
-        options: { responsive: true, maintainAspectRatio: false, scales: { y: { grid: { color: 'rgba(255,255,255,0.05)' } }, x: { grid: { color: 'rgba(255,255,255,0.05)' } } } }
+        options: { 
+          responsive: true, 
+          maintainAspectRatio: false, 
+          scales: { 
+            y: { ticks: { color: textColor }, grid: { color: gridColor } }, 
+            x: { ticks: { color: textColor }, grid: { color: gridColor } } 
+          } 
+        }
       });
 
       const ctx2 = document.getElementById('chart-abs').getContext('2d');
       chartAbInstance = new Chart(ctx2, {
         type: 'line',
         data: { labels: [], datasets: [{ label: 'Ab Reps Progression', data: [], borderColor: '#38bdf8', backgroundColor: 'rgba(56, 189, 248, 0.1)', tension: 0.3, fill: true }] },
-        options: { responsive: true, maintainAspectRatio: false, scales: { y: { grid: { color: 'rgba(255,255,255,0.05)' } }, x: { grid: { color: 'rgba(255,255,255,0.05)' } } } }
+        options: { 
+          responsive: true, 
+          maintainAspectRatio: false, 
+          scales: { 
+            y: { ticks: { color: textColor }, grid: { color: gridColor } }, 
+            x: { ticks: { color: textColor }, grid: { color: gridColor } } 
+          } 
+        }
       });
 
       updateCharts();
