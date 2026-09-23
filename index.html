@@ -343,6 +343,49 @@
     .split-day-item h4 { font-size: 0.7rem; color: var(--text-muted); }
     .split-day-item p { font-size: 0.7rem; font-weight: 600; margin-top: 2px; color: var(--text-main); }
 
+    /* Exercise Library Filter Radio Group UI */
+    .radio-filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .radio-btn-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: var(--input-bg);
+      border: 1px solid var(--bg-card-border);
+      border-radius: var(--radius-md);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .radio-btn-label:hover {
+      background: var(--bg-hover);
+      color: var(--text-main);
+    }
+    .radio-btn-label input[type="radio"] {
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    .radio-btn-label:has(input[type="radio"]:checked) {
+      background: rgba(34, 197, 94, 0.12);
+      border-color: var(--accent);
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    /* Unified Single Grid Container */
+    .exercise-library-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 12px;
+    }
+
     /* Calendar */
     .calendar-external-controls { display: flex; flex-direction: row; align-items: center; gap: 10px; }
     .calendar-container { padding: 10px; }
@@ -505,6 +548,7 @@
     </a>
     <ul class="nav-links">
       <li class="nav-item active"><button onclick="switchView('dashboard')"><i class="fa-solid fa-chart-line"></i> Dashboard</button></li>
+      <li class="nav-item"><button onclick="switchView('exercises')"><i class="fa-solid fa-dumbbell"></i> Exercises</button></li>
       <li class="nav-item"><button onclick="switchView('calendar')"><i class="fa-solid fa-calendar-days"></i> Calendar</button></li>
       <li class="nav-item"><button onclick="switchView('workout-log')"><i class="fa-solid fa-clipboard-list"></i> Workout Log</button></li>
       <li class="nav-item"><button onclick="switchView('personal-records')"><i class="fa-solid fa-trophy"></i> Personal Records</button></li>
@@ -598,6 +642,57 @@
       <div class="glass-card">
         <h3><i class="fa-solid fa-calendar-week" style="color: var(--accent);"></i> Weekly Workout Schedule</h3>
         <div class="split-list" id="split-container"></div>
+      </div>
+    </section>
+
+    <!-- EXERCISES LIBRARY VIEW -->
+    <section id="view-exercises" class="view-section">
+      <div class="section-title">
+        <span>Exercise Library</span>
+      </div>
+      <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px;">
+        Filter exercises by individual muscle target group or view all at once.
+      </p>
+
+      <!-- Radio Buttons Filter -->
+      <div class="radio-filter-group">
+        <label class="radio-btn-label">
+          <input type="radio" name="exercise-split-filter" value="All" checked onchange="renderExerciseLibrary()">
+          <span>All</span>
+        </label>
+        <label class="radio-btn-label">
+          <input type="radio" name="exercise-split-filter" value="Chest" onchange="renderExerciseLibrary()">
+          <span>Chest</span>
+        </label>
+        <label class="radio-btn-label">
+          <input type="radio" name="exercise-split-filter" value="Triceps" onchange="renderExerciseLibrary()">
+          <span>Triceps</span>
+        </label>
+        <label class="radio-btn-label">
+          <input type="radio" name="exercise-split-filter" value="Back" onchange="renderExerciseLibrary()">
+          <span>Back</span>
+        </label>
+        <label class="radio-btn-label">
+          <input type="radio" name="exercise-split-filter" value="Biceps" onchange="renderExerciseLibrary()">
+          <span>Biceps</span>
+        </label>
+        <label class="radio-btn-label">
+          <input type="radio" name="exercise-split-filter" value="Shoulders" onchange="renderExerciseLibrary()">
+          <span>Shoulders</span>
+        </label>
+        <label class="radio-btn-label">
+          <input type="radio" name="exercise-split-filter" value="Legs" onchange="renderExerciseLibrary()">
+          <span>Legs</span>
+        </label>
+        <label class="radio-btn-label">
+          <input type="radio" name="exercise-split-filter" value="Calisthenics" onchange="renderExerciseLibrary()">
+          <span>Calisthenics</span>
+        </label>
+      </div>
+
+      <!-- Unified Exercise Grid Container -->
+      <div id="exercise-library-grid" class="exercise-library-grid">
+        <!-- Dynamically populated -->
       </div>
     </section>
 
@@ -906,6 +1001,7 @@
       document.getElementById('measurements-year-select').value = today.getFullYear().toString();
 
       renderDashboard();
+      renderExerciseLibrary();
       renderCalendar();
       renderWorkoutLogTable();
       renderPersonalRecords();
@@ -969,6 +1065,7 @@
         document.getElementById('sidebar').classList.remove('active');
       }
 
+      if(viewName === 'exercises') renderExerciseLibrary();
       if(viewName === 'personal-records') renderPersonalRecords();
       if(viewName === 'body-measurements') renderMeasurementTable();
 
@@ -977,6 +1074,57 @@
         if(chartWeightInstance) chartWeightInstance.resize();
         if(chartAbInstance) chartAbInstance.resize();
       }
+    }
+
+    function renderExerciseLibrary() {
+      const container = document.getElementById('exercise-library-grid');
+      const selectedRadio = document.querySelector('input[name="exercise-split-filter"]:checked');
+      if (!container || !selectedRadio) return;
+
+      const filterValue = selectedRadio.value;
+      container.innerHTML = '';
+
+      let targetGroups = [];
+      if (filterValue === 'All') {
+        targetGroups = ['Chest', 'Triceps', 'Back', 'Biceps', 'Shoulders', 'Legs', 'Calisthenics'];
+      } else {
+        targetGroups = [filterValue];
+      }
+
+      let items = [];
+      targetGroups.forEach(group => {
+        const exercises = EXERCISE_DATABASE[group] || [];
+        exercises.forEach(exName => {
+          items.push({ name: exName, group: group });
+        });
+      });
+
+      if (items.length === 0) {
+        container.innerHTML = `<div class="glass-card" style="grid-column: 1 / -1; text-align: center; color: var(--text-muted);">No exercises found.</div>`;
+        return;
+      }
+
+      let html = '';
+      items.forEach(item => {
+        const isCalisthenics = item.group === 'Calisthenics';
+        html += `
+          <div class="glass-card" style="margin:0; display:flex; align-items:center; gap:10px; padding:10px 12px;">
+            <div class="metric-icon ${isCalisthenics ? 'ab-icon' : ''}" style="width: 32px; height: 32px; font-size: 0.9rem; flex-shrink: 0;">
+              <i class="fa-solid ${isCalisthenics ? 'fa-bolt' : 'fa-dumbbell'}"></i>
+            </div>
+            <div style="overflow: hidden;">
+              <h4 style="font-size: 0.8rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-main);">
+                ${item.name}
+              </h4>
+              <span style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">
+                ${item.group}
+              </span>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
     }
 
     function setupHeaderInfo() {
@@ -1356,25 +1504,34 @@
           if(w.exercises) {
             w.exercises.forEach(ex => {
               const isCalisthenics = ex.muscleGroup === 'Calisthenics' || ["PushUps", "PullUps", "Squats", "Abs"].includes(ex.name);
-              ex.sets.forEach(s => {
+              
+              if(!ex.sets || ex.sets.length === 0) return;
+
+              ex.sets.forEach((s, idx) => {
+                const currentSetNum = s.setNum || (idx + 1);
+                const weightVal = parseFloat(s.weight) || 0;
+                const repsVal = parseInt(s.reps) || 0;
+
                 if(!isCalisthenics) {
-                  if(!prMap[ex.name] || s.weight > prMap[ex.name].weight) {
+                  // Weighted Exercises: Find peak weight
+                  if(!prMap[ex.name] || weightVal > prMap[ex.name].sortVal) {
                     prMap[ex.name] = {
                       exerciseName: ex.name,
                       muscleGroup: ex.muscleGroup || 'General',
-                      displayValue: `${s.weight.toFixed(1)} kg`,
-                      subText: `Set ${s.setNum} (${s.reps} reps) • ${w.date}`,
-                      sortVal: s.weight
+                      displayValue: `${weightVal.toFixed(1)} kg`,
+                      subText: `Set ${currentSetNum} (${repsVal} reps) • ${w.date}`,
+                      sortVal: weightVal
                     };
                   }
                 } else {
-                  if(!prMap[ex.name] || s.reps > prMap[ex.name].sortVal) {
+                  // Calisthenics: Find peak reps
+                  if(!prMap[ex.name] || repsVal > prMap[ex.name].sortVal) {
                     prMap[ex.name] = {
                       exerciseName: ex.name,
                       muscleGroup: 'Calisthenics',
-                      displayValue: `${s.reps} reps`,
-                      subText: `Set ${s.setNum} • ${w.date}`,
-                      sortVal: s.reps
+                      displayValue: `${repsVal} reps`,
+                      subText: `Set ${currentSetNum} • ${w.date}`,
+                      sortVal: repsVal
                     };
                   }
                 }
@@ -1407,7 +1564,8 @@
       muscleOrder.forEach(muscle => {
         const exercisesInGroup = groupedByMuscle[muscle];
         if(exercisesInGroup && exercisesInGroup.length > 0) {
-          exercisesInGroup.sort((a, b) => b.sortVal - a.sortVal);
+          // Sort exercises alphabetically (A-Z) by name
+          exercisesInGroup.sort((a, b) => a.exerciseName.localeCompare(b.exerciseName));
 
           htmlContent += `
             <div class="glass-card" style="margin-bottom: 0;">
