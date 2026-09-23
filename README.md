@@ -19,6 +19,10 @@ A personal fitness and workout tracking web utility built using HTML, CSS, and J
 
 https://manjesh2022.github.io/MuscleTracker/
 
+## ⬆ Updates
+
+- SEP2026 : added Exercise UI and Fixed PR calculation and Sorting in PR
+
 ## 📄 License
 
 This project is for personal and educational purposes.
