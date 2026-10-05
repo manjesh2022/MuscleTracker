@@ -935,44 +935,115 @@
     const DEFAULT_SPLITS = { 0: "Rest Day", 1: "Chest + Tricep", 2: "Back + Bicep", 3: "Shoulder + Leg", 4: "Chest + Tricep", 5: "Back + Bicep", 6: "Shoulder + Leg" };
 
     const EXERCISE_DATABASE = {
-      "Chest": [
-        "Dumbell Chest Press", "Barbell Chest Press", "Smith Machine Chest Press", 
-        "Smith Machine Incline Chest Press", "Dumbbell Incline Chest Press", "Barbell Incline Chest Press", 
-        "Pec Fly Machine", "Dumbbell Incline Flyes", "Dumbbell Pullover", "Dumbbell Flyes", 
-		"Dumbbell Close Grip Press", "Cable Chest Fly", "Chest Dips", "Smith Machine Decline Chest Press"
-      ],
-      "Triceps": [
-        "Dumbbell Overhead Triceps", "Dumbbell Kickbacks", "Triceps Pushdown (Cable Bar)", 
-        "Triceps Pushdown (Rope)", "Triceps Dips Bench", "Barbell Skull Crusher", "Dumbbell Skull Crusher", 
-        "Overhead Tricep Extension", "Single Arm Dumbbell Tricep Kickback", "Triceps Pushdown (Single Arm)"
-      ],
-      "Back": [
-        "Lat Pulldown", "Behind Neck Lat Pull Down", "Reverse Grip Lat Pulldown", 
-        "Lat Pulldown Close", "Lat Pulldown Medium", "Lat Pulldown Wide", 
-        "Seated Rows", "Barbell Bent-Over Row", "Straight Arm Pulldown", 
-        "One Arm Dumbbell Row", "T-Bar Row", "Back Extension", "Stiff Arm Pull Down", "Single Arm Cable Rows"
-      ],
-      "Biceps": [
-        "Barbell Bicep Curl", "Dumbbell Bicep Curl", "Dumbbell Hammer Curl", 
-        "Dumbbell Hammer Preacher Curl", "Machine Preacher Curl", "Barbell Preacher Curl", 
-        "Dumbbell Preacher Curl", "Dumbbell Concentration Curl", "Chin-ups", "Incline Dumbbell Curl", 
-        "Decline Dumbbell Bench Press", "Cable Bicep Curl", "EZ Barbell Curl"
-      ],
-      "Shoulders": [
-        "Arnold Press", "Incline Bench Reverse Fly", "Dumbbell Shoulder Press", 
-        "Barbell Shoulder Press", "Smith Machine Shoulder Press", "Dumbbell Front Raise", 
-        "Barbell Front Raise", "Cable Front Raise", "Rope Front Raise", "Dumbbell Lateral Raise", 
-        "Dumbbell Upright Row", "Barbell Upright Row", "Cable Upright Row", "Rope Upright Row", 
-        "Dumbbell Shrugs", "Bent Over Dumbbell Reverse Fly", "Face Pull", "Poliquin Lateral Raise", 
-        "Rear Delt", "Dumbbell Rear Delt Fly", "Machine Shoulder Press (Reverse)"
-      ],
-      "Legs": [
-        "Romanian Deadlift (RDL)", "Dumbbell Sumo Squats", "Dumbbell Goblet Squats", 
-        "Leg Extension", "Leg Curl", "Lying Leg Curl", "Walking Lunges", "Calf Raise", 
-        "Leg Press", "Hack Squat", "Smith Machine Squat", "Smith Machine Calf Raises"
-      ],
-      "Calisthenics": ["PushUps", "Squats", "PullUps", "Abs"]
-    };
+  "Chest": [
+    "Barbell Chest Press",
+    "Barbell Incline Chest Press",
+    "Cable Chest Fly",
+    "Chest Dips",
+    "Dumbbell Chest Press",
+    "Dumbbell Close Grip Press",
+    "Dumbbell Flyes",
+    "Dumbbell Incline Chest Press",
+    "Dumbbell Incline Flyes",
+    "Dumbbell Pullover",
+    "Pec Fly Machine",
+    "Smith Machine Chest Press",
+    "Smith Machine Decline Chest Press",
+    "Smith Machine Incline Chest Press"
+  ],
+
+  "Triceps": [
+    "Barbell Skull Crusher",
+    "Dumbbell Kickbacks",
+    "Dumbbell Overhead Triceps",
+    "Dumbbell Skull Crusher",
+    "Overhead Tricep Extension",
+    "Single Arm Dumbbell Tricep Kickback",
+    "Triceps Dips Bench",
+    "Triceps Pushdown (Cable Bar)",
+    "Triceps Pushdown (Rope)",
+    "Triceps Pushdown (Single Arm)"
+  ],
+
+  "Back": [
+    "Back Extension",
+    "Barbell Bent-Over Row",
+    "Behind Neck Lat Pull Down",
+    "Lat Pulldown",
+    "Lat Pulldown Close",
+    "Lat Pulldown Medium",
+    "Lat Pulldown Wide",
+    "One Arm Dumbbell Row",
+    "Reverse Grip Lat Pulldown",
+    "Seated Rows",
+    "Single Arm Cable Rows",
+    "Stiff Arm Pull Down",
+    "Straight Arm Pulldown",
+    "T-Bar Row"
+  ],
+
+  "Biceps": [
+    "Barbell Bicep Curl",
+    "Barbell Preacher Curl",
+    "Cable Bicep Curl",
+    "Chin-ups",
+    "Decline Dumbbell Bench Press",
+    "Dumbbell Bicep Curl",
+    "Dumbbell Concentration Curl",
+    "Dumbbell Hammer Curl",
+    "Dumbbell Hammer Preacher Curl",
+    "Dumbbell Preacher Curl",
+    "EZ Barbell Curl",
+    "Incline Dumbbell Curl",
+    "Machine Preacher Curl"
+  ],
+
+  "Shoulders": [
+    "Arnold Press",
+    "Barbell Front Raise",
+    "Barbell Shoulder Press",
+    "Barbell Upright Row",
+    "Bent Over Dumbbell Reverse Fly",
+    "Cable Front Raise",
+    "Cable Upright Row",
+    "Dumbbell Front Raise",
+    "Dumbbell Lateral Raise",
+    "Dumbbell Rear Delt Fly",
+    "Dumbbell Shoulder Press",
+    "Dumbbell Shrugs",
+    "Dumbbell Upright Row",
+    "Face Pull",
+    "Incline Bench Reverse Fly",
+    "Machine Shoulder Press (Reverse)",
+    "Poliquin Lateral Raise",
+    "Rear Delt",
+    "Rope Front Raise",
+    "Rope Upright Row",
+    "Smith Machine Shoulder Press"
+  ],
+
+  "Legs": [
+    "Calf Raise",
+    "Dumbbell Goblet Squats",
+    "Dumbbell Sumo Squats",
+    "Hack Squat",
+    "Leg Curl",
+    "Leg Extension",
+    "Leg Press",
+    "Lying Leg Curl",
+    "Romanian Deadlift (RDL)",
+    "Smith Machine Calf Raises",
+    "Smith Machine Squat",
+    "Walking Lunges"
+  ],
+
+  "Calisthenics": [
+    "Abs",
+    "PullUps",
+    "PushUps",
+    "Squats"
+  ]
+};
 
     const SPLIT_MAPPING = {
       "Chest + Tricep": { m1: "Chest", m2: "Triceps" },
